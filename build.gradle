@@ -11,4 +11,11 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    testImplementation group: 'com.willowtreeapps.assertk', name: 'assertk-jvm', version: "0.22"
+    testImplementation group: 'com.github.tomakehurst', name: 'wiremock-jre8', version: "2.27.2"
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: "5.7.1"
+
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: "5.7.1"
+
 }
