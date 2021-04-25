@@ -13,6 +13,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.github.doyaaaaaken:kotlin-csv-jvm:0.15.2'
 
     testImplementation group: 'com.willowtreeapps.assertk', name: 'assertk-jvm', version: "0.22"
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock-jre8', version: "2.27.2"

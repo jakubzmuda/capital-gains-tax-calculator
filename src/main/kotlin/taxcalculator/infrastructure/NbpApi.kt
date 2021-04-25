@@ -1,4 +1,4 @@
-package taxCalculator.infrastructure
+package taxcalculator.infrastructure
 
 import retrofit2.Call
 import retrofit2.http.GET

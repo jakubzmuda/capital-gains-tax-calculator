@@ -1,7 +1,7 @@
-package taxCalculator.infrastructure
+package taxcalculator.infrastructure
 
-import taxCalculator.domain.ExchangeRatesLookup
-import taxCalculator.infrastructure.ExternalApiFactory.Companion.buildNbpApi
+import taxcalculator.domain.ExchangeRatesLookup
+import taxcalculator.infrastructure.ExternalApiFactory.Companion.buildNbpApi
 import java.time.LocalDate
 
 class HttpNbpExchangeRatesLookup : ExchangeRatesLookup {

@@ -1,0 +1,2 @@
+- Prowizja ze sprzedaży obniża przychód. Prowizja od zakupu podbija koszt.
+- What about margin?

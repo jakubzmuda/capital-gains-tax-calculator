@@ -1,6 +1,6 @@
-package taxCalculator.domain
+package taxcalculator.domain
 
-import taxCalculator.infrastructure.ExchangeRatesResponse
+import taxcalculator.infrastructure.ExchangeRatesResponse
 import java.time.LocalDate
 
 interface ExchangeRatesLookup {

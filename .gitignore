@@ -4,3 +4,5 @@ build/
 out/
 .gradle/
 gradle/
+/src/main/resources/input/Transactions.csv
+/src/main/resources/input/Account.csv

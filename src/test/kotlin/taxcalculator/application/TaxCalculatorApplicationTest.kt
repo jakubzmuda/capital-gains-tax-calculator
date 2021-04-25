@@ -1,4 +1,4 @@
-package taxCalculator.application
+package taxcalculator.application
 
 import org.junit.jupiter.api.Test
 
