@@ -6,3 +6,4 @@ out/
 gradle/
 /src/main/resources/input/Transactions.csv
 /src/main/resources/input/Account.csv
+/src/main/resources/output/TransactionReport.csv

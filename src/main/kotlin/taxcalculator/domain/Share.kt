@@ -1,6 +1,6 @@
 package taxcalculator.domain
 
-data class ClosedTransactionReport(
+data class Share(
     val assetName: String,
-    val gain: String
+    val tradedAt: Money
 )
