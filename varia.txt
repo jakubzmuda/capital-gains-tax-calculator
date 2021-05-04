@@ -1,2 +1,9 @@
 - Prowizja ze sprzedaży obniża przychód. Prowizja od zakupu podbija koszt.
-- What about margin?
+- What about margin? Can be added to costs. What costs though?
+
+
+- transactions
+- margin + fees (yearly fee for international exchanges)
+
+- dividends
+

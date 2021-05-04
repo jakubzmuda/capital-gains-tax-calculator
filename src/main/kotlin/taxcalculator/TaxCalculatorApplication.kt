@@ -3,8 +3,13 @@ package taxcalculator
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import taxcalculator.domain.*
+import taxcalculator.infrastructure.HttpNbpExchangeRatesLookup
 import java.io.*
-import java.time.*
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import kotlin.math.absoluteValue
 
@@ -17,7 +22,7 @@ fun main() {
 
 class TaxCalculatorApplication {
 
-    private val taxCalculator = TaxCalculator()
+    private val taxCalculator = TaxCalculator(HttpNbpExchangeRatesLookup())
 
     fun processFile(inputFilePath: String, outputFilePath: String) {
         val outputFile = prepareOutputFile(outputFilePath)
@@ -52,6 +57,7 @@ class TaxCalculatorApplication {
                     if (!commissionAmount.isNullOrEmpty()) commissionAmount.toFloat() else 0f,
                     Currency(if (commissionCurrency.isNotEmpty()) commissionCurrency else "EUR")
                 )
+                val stockExchange = StockExchange(row["Giełda referenc"]!!)
                 Transaction(
                     date.atTime(time).toInstant(ZoneOffset.UTC),
                     asset,
@@ -59,15 +65,14 @@ class TaxCalculatorApplication {
                     numberOfShares,
                     priceForUnit,
                     totalPrice,
-                    commission
+                    commission,
+                    stockExchange
                 )
             }
             .toList()
 
 
-            taxCalculator.calculateTransactionTax(transactions)
-
-        return emptyList()
+        return taxCalculator.calculateTransactionTax(transactions)
     }
 
     private fun readCsvFromStream(inputStream: InputStream): String {
@@ -75,11 +80,19 @@ class TaxCalculatorApplication {
     }
 
     private fun writeReportsToStream(reports: List<ClosedPositionReport>, outputStream: OutputStream) {
-        csvWriter().writeAll(reports.map { report -> reportPropertiesAsList(report) }, outputStream)
+        val header = listOf("Data", "Aktywo", "Liczba akcji / udziałów", "Zysk / Strata [PLN]", "Kraj")
+        val rows = reports.map { report -> reportPropertiesAsList(report) }
+        csvWriter().writeAll(listOf(header) + rows, outputStream)
     }
 
     private fun reportPropertiesAsList(report: ClosedPositionReport): List<String> {
-        return emptyList()
+        return listOf(
+            report.date.toString(),
+            report.assetName,
+            report.numberOfShares.absoluteValue.toString(),
+            BigDecimal(report.gainInPolishCurrency.amount.toString()).setScale(2, RoundingMode.HALF_UP).toString(),
+            report.country.code
+        )
     }
 
     private fun prepareOutputFile(outputFilePath: String): File {

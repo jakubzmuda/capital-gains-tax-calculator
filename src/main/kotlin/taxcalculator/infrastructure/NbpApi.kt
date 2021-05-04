@@ -12,8 +12,19 @@ interface NbpApi {
         @Path("startDate") startDate: String,
         @Path("endDate") endDate: String
     ): Call<ExchangeRatesResponse>
+
+    data class ExchangeRatesResponse(
+        val table: String,
+        val currency: String,
+        val code: String,
+        val rates: List<Rate>
+    )
+
+    data class Rate(
+        val no: String,
+        val effectiveDate: String,
+        val mid: Float
+    )
 }
 
-data class ExchangeRatesResponse(
-    val table: String
-)
+

@@ -9,7 +9,8 @@ data class Transaction(
     val numberOfShares: Int,
     val priceForUnit: Money,
     val totalPrice: Money,
-    val commission: Money
+    val commission: Money,
+    val stockExchange: StockExchange
 ) {
 
     fun direction(): TransactionDirection {
