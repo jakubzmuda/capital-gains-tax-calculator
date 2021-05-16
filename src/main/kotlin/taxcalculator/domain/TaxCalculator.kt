@@ -61,6 +61,8 @@ class TaxCalculator(
                 sellTransaction.dateTime.atZone(ZoneOffset.UTC).toLocalDate(),
                 sellTransaction.asset,
                 sellTransaction.numberOfShares,
+                Money(sharesBuyPriceInPolishCurrency, Currency("PLN")),
+                Money(sharesSellPriceInPolishCurrency, Currency("PLN")),
                 gainInPolishCurrency,
                 country
             )

@@ -31,10 +31,10 @@ class TaxCalculatorApplication {
 
     private fun produceTransactionReport(inputStream: InputStream, outputStream: OutputStream) {
         val csv = readCsvFromStream(inputStream)
-        writeReportsToStream(parse(csv), outputStream)
+        writeReportsToStream(parseTransactions(csv), outputStream)
     }
 
-    private fun parse(csv: String): List<ClosedPositionReport> {
+    private fun parseTransactions(csv: String): List<ClosedPositionReport> {
         val transactions: List<Transaction> = csvReader()
             .readAllWithHeader(csv.trimIndent())
             .map { row ->
@@ -80,7 +80,7 @@ class TaxCalculatorApplication {
     }
 
     private fun writeReportsToStream(reports: List<ClosedPositionReport>, outputStream: OutputStream) {
-        val header = listOf("Data", "Aktywo", "Liczba akcji / udziałów", "Zysk / Strata [PLN]", "Kraj")
+        val header = listOf("Data", "Aktywo", "Liczba akcji / udziałów", "Przychód [PLN]", "Koszt [PLN]", "Zysk / Strata [PLN]", "Kraj")
         val rows = reports.map { report -> reportPropertiesAsList(report) }
         csvWriter().writeAll(listOf(header) + rows, outputStream)
     }
@@ -90,6 +90,8 @@ class TaxCalculatorApplication {
             report.date.toString(),
             report.assetName,
             report.numberOfShares.absoluteValue.toString(),
+            BigDecimal(report.sellPriceInPolishCurrency.amount.toString()).setScale(2, RoundingMode.HALF_UP).toString(),
+            BigDecimal(report.buyPriceInPolishCurrency.amount.toString()).setScale(2, RoundingMode.HALF_UP).toString(),
             BigDecimal(report.gainInPolishCurrency.amount.toString()).setScale(2, RoundingMode.HALF_UP).toString(),
             report.country.code
         )
